@@ -32,6 +32,7 @@
 					<?php } ?>
 					</option>
 			</select>
+			<?php echo form_error('id_depe');?>
 			</br>
 		    </br>
 			<label for="Nombres">Horario<span class="asterisco">*</span> </label></br>  <select type="text" name="id_horario">
@@ -40,6 +41,7 @@
 					<?php } ?>
 					</option>
 				</select>
+				<?php echo form_error('id_horario');?>
 			</br>
 		    </br>
 

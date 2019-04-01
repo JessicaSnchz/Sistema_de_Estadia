@@ -57,19 +57,19 @@
 			<?php echo form_error('colonia');?>
 			<br>
 			<label for="Nombres">Calle<span class="asterisco">*</span> </label>
- 			<input type="text" class="form-control" name="calle" value="<?php if(set_value('calle')) echo set_value(calle); else {if($domicilio) echo $domicilio['calle'];}?>" placeholder="Calle">
+ 			<input type="text" class="form-control" name="calle" value="<?php if(set_value('calle')) echo set_value('calle'); else {if($domicilio) echo $domicilio['calle'];}?>" placeholder="Calle">
 			<?php echo form_error('calle');?>
 			<br>
 			<label for="Nombres">Num_int <span class="asterisco">*</span> </label>
-			<input type="text" class="form-control" name="num_int" value="<?php if(set_value('num_int')) echo set_value(num_int); else {if($domicilio) echo $domicilio['num_int'];}?>" placeholder="Num_int">
+			<input type="text" class="form-control" name="num_int" value="<?php if(set_value('num_int')) echo set_value('num_int'); else {if($domicilio) echo $domicilio['num_int'];}?>" placeholder="Num_int">
 			<?php echo form_error('num_int');?>
  			<br>
  			<label for="Nombres">Num_ext <span class="asterisco">*</span> </label>
-			<input type="text" class="form-control" name="num_ext" value="<?php if(set_value('num_ext')) echo set_value(num_ext); else {if($domicilio) echo $domicilio['num_ext'];}?>" placeholder="Num_ext">
+			<input type="text" class="form-control" name="num_ext" value="<?php if(set_value('num_ext')) echo set_value('num_ext'); else {if($domicilio) echo $domicilio['num_ext'];}?>" placeholder="Num_ext">
 			<?php echo form_error('num_ext');?>
  			<br>
 			<label for="Nombres">C_P <span class="asterisco">*</span> </label>
-			<input type="text" class="form-control" name="c_p" value="<?php if(set_value('c_p')) echo set_value(num_int); else {if($domicilio) echo $domicilio['c_p'];}?>" placeholder="C_P">
+			<input type="text" class="form-control" name="c_p" value="<?php if(set_value('c_p')) echo set_value('num_int'); else {if($domicilio) echo $domicilio['c_p'];}?>" placeholder="C_P">
 			<?php echo form_error('c_p');?>
  			</br>
  			<input type="hidden" name="id_dom" value="<?php echo $domicilio['id_dom']; ?>">

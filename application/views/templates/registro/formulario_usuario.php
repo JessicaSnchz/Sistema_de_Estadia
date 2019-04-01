@@ -72,18 +72,21 @@
 						?>
 					</option>
 			</select>
+			<?php echo form_error('id_area');?>
           </br>
-		  	<label for="Nombres">Cargo <span class="asterisco">*</span> </label></br> <select type="text" name="id_cargo" class="form-control">
+		  	<label for="Nombres">Cargo <span class="asterisco">*</span> </label></br> 
+		  	<select type="text" name="id_cargo" class="form-control">
 					<?php foreach ($cargos as $c){ ?>
 					<option value="<?=$c->id_cargo;?>"><?=$c->nombre;?>
 					<?php } ?>
 					</option>
 			</select>
+			<?php echo form_error('id_cargo');?>
     </div><!--panel body-->
  </div><!--panel primary-->
 
  <div class="panel panel-primary">
-      <div class="panel-heading">Información de cuentas</div>
+      <div class="panel-heading">Información de la cuenta</div>
     <div class="panel-body">
     		<label for="Correo">Correo electrónico <span class="asterisco">*</span></label>
 		    <input type="email" class="form-control" id="Correo" name="correo" value="<?php echo set_value('correo'); ?>" placeholder="Correo electrónico">
@@ -128,8 +131,27 @@
   </div>
 </div>
 
-		  <button type="submit" class="btn btn-primary" name="formulario">Registrar usuario</button>
+		  <button class="btn btn-primary" data-toggle="modal" data-target="#myModal1" type="submit"  name="formulario">Registrar usuario</button>
+		   <div id="myModal1" class="modal fade" role="dialog">
+                          <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Reasignar caso</h4>-->
+                              </div>
+                              <div class="modal-body">
+                                <h4>¡El usuario ha sido registrado exitosamente!</h4>
+                              </div>
+                              <div class="modal-footer">
+                                <a href="<?php echo base_url();?>index.php/proyecto?>" type="button" class="btn btn-primary btn-sm" data-dismiss="modal" rol="button"><span class="glyphicon glyphicon-remove"></span> Cerrar></a>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
 		</form>
+
 
 	</div>
    </div><!--row-->

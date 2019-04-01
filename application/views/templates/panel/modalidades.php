@@ -13,7 +13,7 @@
 		        <th>Modalidad</th>
 		        <th>Descripción</th>
 		        <th>Identificador</th>
-		        <th>Edición</th>
+		        <th>Eliminar</th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -24,7 +24,7 @@
 		        <td><?php echo $m->nombre_modalidad; ?></td>
 		        <td><?php echo $m->descripcion; ?></td>
 		        <td><?php echo $m->identificador; ?></td>
-		        <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/edita_modalidad/<?php echo $m->id_modalidad;?>" role="button"><span class="glyphicon glyphicon-pencil"></span> Editar</a></td>
+		        <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/elimina_modalidad/<?php echo $m->id_modalidad;?>" role="button"><span class="glyphicon glyphicon-trash"></span> Eliminar</a></td>
 		      </tr>
 		        <?php
 		 		}

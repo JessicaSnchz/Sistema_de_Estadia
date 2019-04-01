@@ -15,6 +15,7 @@
 		        <th>Descripción</th>
 		        <th>Identificador</th>
 		        <th>Edición</th>
+		        <th>Eliminar</th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -26,6 +27,7 @@
 		        <td><?php echo $c->descripcion; ?></td>
 		        <td><?php echo $c->identificador_c; ?></td>
 		        <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/edita_clasificacion/<?php echo $c->id_clasificacion;?>" role="button"><span class="glyphicon glyphicon-pencil"></span> Editar</a></td>
+		        <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/eliminar_clasificacion/<?php echo $c->id_clasificacion;?>" role="button"><span class="glyphicon glyphicon-eliminar"></span> Eliminar</a></td>
 		      </tr>
 		        <?php
 		 		}

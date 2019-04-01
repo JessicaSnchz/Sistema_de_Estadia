@@ -101,16 +101,19 @@ class Proyecto extends CI_Controller {
 		  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		  <strong>Alerta </strong>','</div>');
 
-		$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[25]');
+		$this->form_validation->set_rules('nombres','Nombre','required|min_length[3]|max_length[25]');
 		$this->form_validation->set_rules('apellido_p','Apellido Paterno', 'required|min_length[2]|max_length[25]');
 		$this->form_validation->set_rules('apellido_m','Apellido Materno', 'required|min_length[2]|max_length[25]');
 
 		$this->form_validation->set_rules('genero', 'Género', 'required');
 		$this->form_validation->set_rules('fecha', 'Fecha de nacimiento', 'required|callback_valid_date[d-m-y,-]');
 
-       $this->form_validation->set_rules('num_empleado', 'Número de empleado', 'required|min_length[1]|max_length[5]');
+       $this->form_validation->set_rules('num_empleado', 'Número de empleado', 'required|min_length[1]|max_length[5]|is_unique[persona.num_empleado],',array( 'required' => 'No has proporcionado %s.', 'is_unique' => 'Este %s ya existe.' ));
+       $this->form_validation->set_rules('id_area', 'Área', 'required');
+       $this->form_validation->set_rules('id_cargo', 'Cargo', 'required');
 
-		$this->form_validation->set_rules('correo','Correo Electrónico','required|min_length[2]|max_length[100]|valid_email|is_unique[usuario.usuario]');
+		$this->form_validation->set_rules('correo','Correo Electrónico','required|min_length[2]|max_length[100]|valid_email|is_unique[usuario.usuario]',array( 'required' => 'No has proporcionado %s.', 'is_unique' => 'Este %s ya existe.' ));
+
 		$this->form_validation->set_rules('contrasena','Contraseña', 'required|min_length[4]|max_length[25]|callback_check_password');
 		$this->form_validation->set_rules('contrasena_conf','Confirmar contraseña', 'required|min_length[4]|max_length[25]|matches[contrasena]');
 
@@ -128,7 +131,7 @@ class Proyecto extends CI_Controller {
 			$this->load->view('templates/registro/footer');
 
 
-		}
+		}else{
 			if($this->input->post()){
 
 			//05-07-2016
@@ -167,9 +170,10 @@ class Proyecto extends CI_Controller {
 
 			$this->Modelo_proyecto->insertar_usuario($data_usuario);
 
-			header('Location:'.base_url('index.php/proyecto/').'');
+			//header('Location:'.base_url('index.php/proyecto/').'');
 
-			}	
+			}header('Location:'.base_url('index.php/proyecto/').'');
+		}
 	
 }
 
@@ -398,7 +402,7 @@ public function alta_seccion(){
 
 	$this->form_validation->set_rules('nombre','Privilegio', 'required|min_length[3]|max_length[35]');
 	$this->form_validation->set_rules('descripcion','Descripción', 'required|min_length[3]|max_length[100]');
-	$this->form_validation->set_rules('url','URL', 'required|min_length[3]|max_length[20]');
+	$this->form_validation->set_rules('url','URL', 'required|min_length[3]|max_length[20]|is_unique[seccion.url],',array( 'required' => 'No has proporcionado %s.', 'is_unique' => 'Este %s ya existe.' ));
 
 
 	if($this->form_validation->run()==FALSE){
@@ -467,6 +471,14 @@ public function edita_seccion(){
 	}else{
 			header('Location:'.base_url('index.php/proyecto/secciones').'');
 	}
+}
+
+public function delete_seccion(){
+	$data = array(
+		'id_seccion' => $this->uri->segment(3)
+		);
+	$this->Modelo_proyecto->delete_seccion($data);
+	header('Location:'.base_url('index.php/proyecto/secciones/'.$this->uri->segment(3).'').'');
 }
 //Privilegio Sección ------------
 
@@ -598,11 +610,11 @@ public function alta_areas(){
 	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 	<strong>Alerta </strong>','</div>');
 
-	$this->form_validation->set_rules('nombre_a','Área', 'required|min_length[3]|max_length[30]');
+	$this->form_validation->set_rules('nombre_a','Área', 'required|min_length[3]|max_length[60]|is_unique[areas.nombre_a],',array( 'required' => 'No has proporcionado %s.', 'is_unique' => 'Este %s ya existe.' ));
 	$this->form_validation->set_rules('descripcion','Descripción', 'required|min_length[3]|max_length[150]');
 	$this->form_validation->set_rules('ubicacion','Ubicación', 'required|min_length[3]|max_length[150]');
-	$this->form_validation->set_rules('dependencia','Dependencia','required');
-	$this->form_validation->set_rules('horario','Horario','required');
+	$this->form_validation->set_rules('id_depe','Dependencia','required');
+	$this->form_validation->set_rules('id_horario','Horario','required');
 
 
 
@@ -612,7 +624,7 @@ public function alta_areas(){
 		$this->load->view('templates/panel/alta_area',$data);
 		$this->load->view('templates/panel/footer');
 		
-	}
+	}else{
 		if($this->input->post()){
 			$data_area = array(
 				'nombre_a' => $this->input->post('nombre_a'),
@@ -626,7 +638,7 @@ public function alta_areas(){
 
 			header('Location:'.base_url('index.php/proyecto/areas').'');
 		}
-	
+	}
 }
 
 public function edita_area(){
@@ -683,6 +695,14 @@ public function edita_area(){
 	}
 
 }
+
+public function elimina_areas(){
+		$data = array(
+		'id_area' => $this->uri->segment(3)
+		);
+	$this->Modelo_proyecto->elimina_area($data);
+	header('Location:'.base_url('index.php/proyecto/areas/'.$this->uri->segment(3).'').'');
+}
 //----------Cargos----------------------------------------------------------
 public function cargos(){
 $this->Modelo_proyecto->valida_sesion();
@@ -718,8 +738,8 @@ public function alta_cargo(){
 	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 	<strong>Alerta </strong>','</div>');
 
-	$this->form_validation->set_rules('nombre','Cargo', 'required|min_length[3]|max_length[70]');
-	$this->form_validation->set_rules('descrip','Descripción', 'required|min_length[3]|max_length[150]');
+	$this->form_validation->set_rules('nombre','Cargo', 'required|min_length[3]|max_length[70]|is_unique[cargos.nombre],',array( 'required' => 'No has proporcionado %s.', 'is_unique' => 'Este %s ya existe.' ));
+	$this->form_validation->set_rules('descripcion_c','Descripción', 'required|min_length[3]|max_length[150]');
 	//$this->form_validation->set_rules('id_area','Área','required');
 
 
@@ -728,7 +748,7 @@ public function alta_cargo(){
 		$this->load->view('templates/panel/menu',$data);
 		$this->load->view('templates/panel/alta_cargo',$data);
 		$this->load->view('templates/panel/footer');
-	}
+	}else{
 		if($this->input->post()){
 			$data_cargo = array(
 				'nombre' => $this->input->post('nombre'),
@@ -744,6 +764,7 @@ public function alta_cargo(){
 
 			header('Location:'.base_url('index.php/proyecto/cargos').'');
 		}	
+	}
 }
 
 public function edita_cargo(){
@@ -789,7 +810,14 @@ public function edita_cargo(){
 	}
 }
 
-
+public function elimina_cargo(){
+$data = array(
+		'id_cargo' => $this->uri->segment(3),
+		
+		);
+	$this->Modelo_proyecto->elimina_cargo($data);
+	header('Location:'.base_url('index.php/proyecto/cargos/'.$this->uri->segment(3).'').'');
+}
 
 
 //---------Dependencias-----------------------------------------------------
@@ -839,7 +867,9 @@ public function alta_dependencia(){
 	$this->form_validation->set_rules('municipio','Municipio', 'required|min_length[3]|max_length[30]');
 	$this->form_validation->set_rules('colonia','colonia', 'required|min_length[3]|max_length[50]');
 	$this->form_validation->set_rules('calle','Calle', 'required|min_length[3]|max_length[50]');
-$this->form_validation->set_rules('extension','Extensión telefónica', 'required|min_length[1]|max_length[5]');
+	$this->form_validation->set_rules('c_p','Código postal', 'required');
+
+//$this->form_validation->set_rules('extension','Extensión telefónica', 'required|min_length[1]|max_length[5]');
 
 	if($this->form_validation->run()==FALSE){
 		$this->load->view('templates/panel/header',$data);
@@ -910,7 +940,9 @@ public function edita_dependencia(){
 	$this->form_validation->set_rules('municipio','Municipio', 'required|min_length[3]|max_length[30]');
 	$this->form_validation->set_rules('colonia','colonia', 'required|min_length[3]|max_length[50]');
 	$this->form_validation->set_rules('calle','Calle', 'required|min_length[3]|max_length[50]');
-$this->form_validation->set_rules('extension','Extensión telefónica', 'required|min_length[1]|max_length[5]');
+	$this->form_validation->set_rules('c_p','Código postal', 'required');
+
+//$this->form_validation->set_rules('extension','Extensión telefónica', 'required|min_length[1]|max_length[5]');
 
 		if ($this->form_validation->run() == FALSE){
 
@@ -936,7 +968,7 @@ $this->form_validation->set_rules('extension','Extensión telefónica', 'require
 				'extension' =>  $this->input->post('extension')
 				);
 
-				$this->Modelo_proyecto->actualiza_dependencia($this->input->post('id_dep'),$data);
+				$this->Modelo_proyecto->actualiza_dependencia($this->uri->segment(3),$data);
 
 
 				$data= array(
@@ -951,13 +983,28 @@ $this->form_validation->set_rules('extension','Extensión telefónica', 'require
 				//var_dump($id_dom)
 				);
 				
-			$this->Modelo_proyecto->actualiza_domicilio($this->input->post('id_dom'),$data);
+			$this->Modelo_proyecto->actualiza_domicilio($this->uri->segment(4),$data);
 
 				header('Location:'.base_url('index.php/proyecto/dependencias').'');
 		}
 	}else{
 			header('Location:'.base_url('index.php/proyecto/dependencias').'');
 	}
+}
+
+public function elimina_dep_dom(){
+
+		$data = array(
+		'id_depe' => $this->uri->segment(3),
+		);
+	$this->Modelo_proyecto->elimina_dep($data);
+
+		$data_dom = array(
+		'id_dom' => $this->uri->segment(4),
+		);
+	$this->Modelo_proyecto->elimina_dom($data_dom);
+
+	header('Location:'.base_url('index.php/proyecto/dependencias/'.$this->uri->segment(3).''.$this->uri->segment(4).'').'');
 }
 
 //----------------Horario------------------------------------------------------
@@ -973,33 +1020,11 @@ $this->Modelo_proyecto->valida_sesion();
 	$this->load->library('form_validation');
 	$this->load->helper(array('form', 'url'));
 
-	$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	<strong>Alerta </strong>','</div>');
-
-	$this->form_validation->set_rules('dias','Días', 'required|min_length[10]|max_length[20]');
-	$this->form_validation->set_rules('horas','Horas', 'required|min_length[2]|max_length[18]');
-	
-
-	if($this->form_validation->run()==FALSE){
 		$this->load->view('templates/panel/header',$data);
 		$this->load->view('templates/panel/menu',$data);
 		$this->load->view('templates/panel/horarios',$data);
 		$this->load->view('templates/panel/footer');
-	}else{
-		if($this->input->post()){
-			$data = array(
-				'dias' => $this->input->post('dias'),
-				'horas' => $this->input->post('horas'),
-				//'siglas' => $this->input->post('siglas'),
-				//'activo' => $this->input->post('menu')
-				);
-
-			$this->Modelo_proyecto->inserta_horario($data);
-
-			header('Location:'.base_url('index.php/proyecto/horarios').'');
-		}
-	}
+	
 }
 
  public function alta_horario(){
@@ -1086,9 +1111,8 @@ public function alta_leyes(){
 	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 	<strong>Alerta </strong>','</div>');
 
-	$this->form_validation->set_rules('titulo','Titulo', 'required|min_length[3]|max_length[75]');
-	$this->form_validation->set_rules('lugar','Lugar', 'required|min_length[3]|max_length[100]');
-	$this->form_validation->set_rules('fecha','Fecha', 'required|min_length[3]|max_length[20]');
+	$this->form_validation->set_rules('titulo','Titulo', 'required|min_length[3]|max_length[75]|is_unique[leyes.titulo],',array( 'required' => 'No has proporcionado %s.', 'is_unique' => 'Este %s ya existe.' ));
+	
 
 
 	if($this->form_validation->run()==FALSE){
@@ -1096,7 +1120,7 @@ public function alta_leyes(){
 		$this->load->view('templates/panel/menu',$data);
 		$this->load->view('templates/panel/alta_leyes',$data);
 		$this->load->view('templates/panel/footer');
-	}
+	}else{
 		if($this->input->post()){
 			
 			$data = array(
@@ -1108,7 +1132,7 @@ public function alta_leyes(){
 			header('Location:'.base_url('index.php/proyecto/leyes').'');
 
 		} 
-	
+	}
 }
 
 public function elimina_ley(){
@@ -1295,7 +1319,7 @@ public function elimina_medio(){
 	$this->Modelo_proyecto->elimina_medio($data);
 	header('Location:'.base_url('index.php/proyecto/medios/'.$this->uri->segment(3).'').'');
 }
-//------------------------------USUARIOS-------------------------------------
+//------------------------------USUARIOS Y PERSONAS-------------------------------------
 public function usuarios(){
 	$this->Modelo_proyecto->valida_sesion();
 	$this->Modelo_proyecto->Estar_aqui();
@@ -1364,6 +1388,77 @@ public function asigna_privilegio(){
 			header('Location:'.base_url('index.php/proyecto/usuarios').'');
 	}
 }
+
+public function edita_persona(){
+$this->Modelo_proyecto->valida_sesion();
+	$this->Modelo_proyecto->Estar_aqui();
+
+	if(!empty($this->uri->segment(3))){
+
+		$data['sesion'] = $this->Modelo_proyecto->datos_sesion();
+		$data['menu'] = $this->Modelo_proyecto->datos_menu();
+
+		$this->load->library('form_validation');
+		$this->load->helper(array('form', 'url'));
+		$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<strong>Alerta </strong>','</div>');
+
+	$this->form_validation->set_rules('nombres','Nombre', 'required|min_length[3]|max_length[30]');
+	$this->form_validation->set_rules('ape_pat','Apellido Paterno', 'required|min_length[3]|max_length[30]');
+	$this->form_validation->set_rules('ape_mat','Apellido Materno', 'required|min_length[3]|max_length[30]');
+	$this->form_validation->set_rules('fecha_nac','Fecha de nacimiento', 'required|min_length[3]|max_length[30]');
+	$this->form_validation->set_rules('genero','genero', 'required|min_length[3]|max_length[30]');
+	$this->form_validation->set_rules('num_empleado','Número de empleado', 'required|min_length[3]|max_length[30]');
+	$this->form_validation->set_rules('area','Area', 'required|min_length[3]|max_length[30]');
+	$this->form_validation->set_rules('cargo','Cargo', 'required|min_length[3]|max_length[30]');
+		$this->form_validation->set_rules('gmail','Gmail', 'required|min_length[3]|max_length[30]');
+
+	
+
+		if ($this->form_validation->run() == FALSE){
+		$data['id_persona'] = $this->uri->segment(3);
+		$data['persona'] = $this->Modelo_proyecto->datos_persona($data['id_persona']);
+		$data['areas'] = $this->Modelo_proyecto->devuelve_areas('id_area');
+		$data['cargos'] = $this->Modelo_proyecto->devuelve_cargos('id_cargo');
+		//$data['extensiones'] = $this->Modelo_proyecto->devuelve_extension()
+
+		$this->load->view('templates/panel/header',$data);
+		$this->load->view('templates/panel/menu',$data);
+		$this->load->view('templates/panel/formulario_edita_persona',$data);
+		$this->load->view('templates/panel/footer');
+		}else{
+			//var_dump($id_persona); 
+
+			$data= array(
+
+				'nombres' => $this->input->post('nombres'),
+				'apellido_p' => $this->input->post('ape_pat'),
+				'apellido_m' =>$this->input->post('ape_mat'),
+				'fecha_nac' =>$this->input->post('fecha_nac'),
+				'genero' => $this->input->post('genero'),
+				'num_empleado' =>  $this->input->post('num_empleado'),
+				'id_area' =>  $this->input->post('id_area'),
+				'id_cargo' =>  $this->input->post('id_cargo')
+
+
+				);
+
+
+			$this->Modelo_proyecto->actualiza_persona($this->input->post('id_persona'),$data);
+			header('Location:'.base_url('index.php/proyecto/usuarios').'');
+
+		}
+	}
+
+
+
+
+
+else{
+			header('Location:'.base_url('index.php/proyecto/usuarios').'');
+	}
+}
 ///++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++pendientre
 public function elimina_priv(){
 	$data = array(
@@ -1404,7 +1499,7 @@ public function alta_modalidad(){
 	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 	<strong>Alerta </strong>','</div>');
 
-	$this->form_validation->set_rules('nombre_modalidad','Nombre', 'required|min_length[3]|max_length[30]');
+	$this->form_validation->set_rules('nombre_modalidad','Nombre', 'required|min_length[3]|max_length[30]|is_unique[modalidades.nombre_modalidad],',array( 'required' => 'No has proporcionado %s.', 'is_unique' => 'Este %s ya existe.' ));
 	$this->form_validation->set_rules('descripcion','Descripcione', 'required|min_length[3]|max_length[150]');
 	$this->form_validation->set_rules('identificador','Identificador', 'required|min_length[1]|max_length[2]');
 	
@@ -1429,54 +1524,15 @@ public function alta_modalidad(){
 	}
 }
 
-public function edita_modalidad(){
+public function elimina_modalidad(){
 
-	$this->Modelo_proyecto->valida_sesion();
-	$this->Modelo_proyecto->Estar_aqui();
+	$data = array(
+		'id_modalidad' => $this->uri->segment(3)
+		
+		);
+	$this->Modelo_proyecto->elimina_modalidad($data);
 
-	if(!empty($this->uri->segment(3))){
-
-		$data['sesion'] = $this->Modelo_proyecto->datos_sesion();
-		$data['menu'] = $this->Modelo_proyecto->datos_menu();
-
-		$data['modalidades'] = $this->Modelo_proyecto->devuelve_modalidades();
-	//$data['horario'] = $this->Modelo_proyecto->devuelve_horarios();
-
-		$this->load->library('form_validation');
-		$this->load->helper(array('form', 'url'));
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		<strong>Alerta </strong>','</div>');
-
-		$this->form_validation->set_rules('nombre_modalidad','Nombre', 'required|min_length[3]|max_length[30]');
-	$this->form_validation->set_rules('descripcion','Descripcione', 'required|min_length[3]|max_length[150]');
-	$this->form_validation->set_rules('identificador','Identificador', 'required|min_length[1]|max_length[2]');
-
-
-		if ($this->form_validation->run() == FALSE){
-
-		$data['id_modalidad'] = $this->uri->segment(3);
-		$data['modalidades'] = $this->Modelo_proyecto->datos_modalidad($data['id_modalidad']);
-
-
-		$this->load->view('templates/panel/header',$data);
-		$this->load->view('templates/panel/menu',$data);
-		$this->load->view('templates/panel/formulario_edita_modalidad',$data);
-		$this->load->view('templates/panel/footer');
-		}else{
-			$data = array(
-				'nombre_modalidad' => $this->input->post('nombre_modalidad'),
-				'descripcion' => $this->input->post('descripcion'),
-				'identificador' => $this->input->post('identificador')
-				);
-
-
-				$this->Modelo_proyecto->actualiza_modalidad($this->input->post('id_modalidad'),$data);
-				header('Location:'.base_url('index.php/proyecto/modalidades').'');
-		}
-	}else{
-			header('Location:'.base_url('index.php/proyecto/modalidades').'');
-	}
+	header('Location:'.base_url('index.php/proyecto/modalidades/').$this->uri->segment(3).'');
 
 }
 
@@ -1512,9 +1568,9 @@ $data['sesion'] = $this->Modelo_proyecto->datos_sesion();
 	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 	<strong>Alerta </strong>','</div>');
 
-	$this->form_validation->set_rules('nombre_clasificacion','Nombre', 'required|min_length[3]|max_length[50]');
+	$this->form_validation->set_rules('nombre_clasificacion','Registro público municipal', 'required|min_length[3]|max_length[50]|is_unique[clasificacion.nombre_clasificacion],',array( 'required' => 'No has proporcionado %s.', 'is_unique' => 'Este %s ya existe.' ));
 	$this->form_validation->set_rules('descripcion','Descripción', 'required|min_length[3]|max_length[150]');
-	$this->form_validation->set_rules('identificador_c','Identificador', 'required|min_length[1]|max_length[2]');
+	$this->form_validation->set_rules('identificador_c','Identificador', 'required|min_length[1]|max_length[2]|is_unique[clasificacion.identificador_c],',array( 'required' => 'No has proporcionado %s.', 'is_unique' => 'Este %s ya existe.' ));
 	
 	
 
@@ -1587,6 +1643,15 @@ public function edita_clasificacion(){
 			header('Location:'.base_url('index.php/proyecto/clasificaciones').'');
 	}
 
+}
+
+public function eliminar_clasificacion(){
+	$data = array(
+		'id_clasificacion' => $this->uri->segment(3)	
+		);
+	$this->Modelo_proyecto->elimina_clasificacion($data);
+
+	header('Location:'.base_url('index.php/proyecto/clasificaciones/').$this->uri->segment(3).'');
 }
 //_______________ Scripts objetos dinámicos____________________________________
 
@@ -1715,84 +1780,6 @@ header('Location:'.base_url('index.php/proyecto/alta_fichat_2_1').'/'.$id_ts.'')
 }
 
 
-public function alta_fichat_2(){
-
-	$this->Modelo_proyecto->valida_sesion();
-	$this->Modelo_proyecto->Estar_aqui();
-
-	if(!empty($this->uri->segment(3))){
-
-	$data['sesion'] = $this->Modelo_proyecto->datos_sesion();
-	$data['menu'] = $this->Modelo_proyecto->datos_menu();
-
-		//$data['orden'] = $this->Modelo_proyecto->devuelve_orden();
-        $data['pasos'] = $this->Modelo_proyecto->devuelve_pasos();
-
-        $data['ts'] = $this->Modelo_proyecto->devuelve_ts();
-
-		
-	$this->load->library('form_validation');
-	$this->load->helper(array('form', 'url'));
-
-
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-		  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		  <strong>Alerta </strong>','</div>');
-
-		//no hago validavión por que ameritaría crear un script de clickOn para saber que campos serán obligatorios, asi que solo use el campo de nuevo paso como referencia
-if($this->form_validation->run()==FALSE){
-
-
-	$data['id_ts'] = $this->uri->segment(3);
-	$data['ts'] = $this->Modelo_proyecto->datos_ts($data['id_ts']);
-
-		$this->load->view('templates/panel/header',$data);
-		$this->load->view('templates/panel/menu',$data);
-		$this->load->view('templates/panel/alta_ficha_2',$data);
-		$this->load->view('templates/panel/footer');
-		var_dump($data['id_ts'] );
-		}
-			if($this->input->post()){
-
-			$id_ts=$this->input->post('id_ts');
-			$data_orden=$this->input->post('orden[]');
-			$data_paso=$this->input->post('pasos[]');
-			$data_new_paso=$this->input->post('nuevo_paso[]');
-			$cont = 0;
-
-	//var_dump($data_orden); die();
-
-		foreach ($data_orden as $o){
-				
-				if(!empty($data_new_paso[$cont])){
-					$data_pasos = array(
-						'descripcion_paso' => ($data_new_paso[$cont]),
-					);
-					$id_paso = $this->Modelo_proyecto->inserta_nuevo_paso($data_pasos);
-			
-					$data_final = array(
-						'fk_ts'	=> ($id_ts),
-						'fk_paso' => ($id_paso),
-						'fk_orden' => ($o)
-					);
-					$this->Modelo_proyecto->inserta_pasos_ts($data_final);
-				}else{
-
-					$data = array(
-						'fk_ts'	=> ($id_ts),
-						'fk_paso' => ($data_paso[$cont]),
-						'fk_orden' => ($o)
-					);
-					$this->Modelo_proyecto->inserta_pasos_ts($data);
-				}
-				$cont++;
-			} //var_dump($data_orden); die();
-			header('Location:'.base_url('index.php/proyecto/alta_fichat_3').'/'.$id_ts.'');
-		}
-	}else{
-			header('Location:'.base_url('index.php/proyecto/alta_fichat_2').'');
-	}
-}
 
 public function alta_fichat_2_1(){
 	$this->Modelo_proyecto->valida_sesion();
@@ -1862,91 +1849,6 @@ public function elimina_ts_paso(){
 	header('Location:'.base_url('index.php/proyecto/alta_fichat_2_1/').$this->uri->segment(3).'');
 }
 
-public function alta_fichat_3(){
-	$this->Modelo_proyecto->valida_sesion();
-	$this->Modelo_proyecto->Estar_aqui();
-
-	if(!empty($this->uri->segment(3))){
-	$data['sesion'] = $this->Modelo_proyecto->datos_sesion();
-	$data['menu'] = $this->Modelo_proyecto->datos_menu();
-	$data['orden'] = $this->Modelo_proyecto->devuelve_orden();
-	$data['requisitos'] = $this->Modelo_proyecto->devuelve_requisitos();
-	$data['tramites'] = $this->Modelo_proyecto->devuelve_tramites();
-    $data['ts'] = $this->Modelo_proyecto->devuelve_ts();
-	
-	$this->load->library('form_validation');
-	$this->load->helper(array('form', 'url'));
-	$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-		  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		  <strong>Alerta </strong>','</div>');
-	$this->form_validation->set_rules('id_ts','id_ts', 'required');
-
-		//no hago validavión por que ameritaría crear un script de clickOn para saber que campos serán obligatorios, asi que solo use el campo de nuevo paso como referencia
-	if($this->form_validation->run()==fALSE){
-		$data['id_ts'] = $this->uri->segment(3);
-		$data['ts'] = $this->Modelo_proyecto->datos_ts($data['id_ts']);
-
-		$this->load->view('templates/panel/header',$data);
-		$this->load->view('templates/panel/menu',$data);
-		$this->load->view('templates/panel/alta_ficha_3',$data);
-		$this->load->view('templates/panel/footer');
-		}else{
-			if($this->input->post()){
-				//die("Angie está equivocada");
-				$id_ts=$this->input->post('id_ts');
-				$data_orden=$this->input->post('orden[]');
-				$data_r=$this->input->post('requis[]');
-				$data_tramite=$this->input->post('tramites[]');
-				$data_new_r=$this->input->post('nuevo_requisito[]');
-				$data_files=$this->input->post('archivos[]');
-				$data_or=$this->input->post('original[]');
-				$data_cop=$this->input->post('copias[]');
-				$cont=0;
-				//die(var_dump($data_orden));
-				foreach ($data_orden as $o){
-					$data_cantidad = array(
-						'copias' => ($data_cop[$cont]),
-						'original' => ($data_or[$cont])
-					);
-					$id_cantidad = $this->Modelo_proyecto->inserta_cantidad($data_cantidad);
-
-					if(!empty($data_new_r[$cont])){
-						$data_req = array(
-						'descripcion_req' => ($data_new_r[$cont]),
-					);
-					$id_requi = $this->Modelo_proyecto->inserta_nuevo_requi($data_req);
-					
-					$data_final = array(
-						'fk_ts'	=> ($id_ts),
-						'fk_requisito' => ($id_requi),
-						'fk_orden' => ($o),
-						//'fk_archivo' => ,
-						'fk_cantidad' => ($id_cantidad)
-					);
-
-					$this->Modelo_proyecto->inserta_req_ts($data_final);
-					}else{
-						$data = array(
-						'fk_ts'	=> ($id_ts),
-						'fk_requisito' => ($data_r[$cont]),
-						'fk_orden' => ($o),
-						//'fk_archivo' => ,
-						'fk_cantidad' => ($id_cantidad)
-						);
-
-						$this->Modelo_proyecto->inserta_req_ts($data);
-					}
-				$cont++;
-				//var_dump($cont); 
-				}
-				//die();
-					header('Location:'.base_url('index.php/proyecto/alta_fichat_4').'/'.$id_ts.'');
-				}
-		}
-	}else{
-	header('Location:'.base_url('index.php/proyecto/alta_fichat_3').'');
-	}
-}
 
 public function alta_fichat_3_1(){
 	$this->Modelo_proyecto->valida_sesion();
@@ -2222,7 +2124,7 @@ public function revision_ficha(){
 
 		$data['sesion'] = $this->Modelo_proyecto->datos_sesion();
 		$data['menu'] = $this->Modelo_proyecto->datos_menu();
-		$amor="angie";
+
 
 		$this->load->library('form_validation');
 		$this->load->helper(array('form', 'url'));
@@ -2230,15 +2132,14 @@ public function revision_ficha(){
 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		<strong>Alerta </strong>','</div>');
 
-		$this->form_validation->set_rules('nombre_a','Área', 'required|min_length[3]|max_length[30]');
-	$this->form_validation->set_rules('descripcion','Descripción', 'required|min_length[3]|max_length[150]');
-	$this->form_validation->set_rules('ubicacion','Ubicación', 'required|min_length[3]|max_length[150]');
+	$this->form_validation->set_rules('validacion','Validación', 'required');
+	$this->form_validation->set_rules('comentarios','Comentarios', 'min_length[10]|max_length[300]');
 	//$this->form_validation->set_rules('dependencia','Dependencia','trim|required|xss_clean');
-	//$this->form_validation->set_rules('horario','Horario','trim|required|xss_clean');
-
+	//$this->form_validation->set_rules('horario','Horario','trim|required|xss_clean')
 
 		if ($this->form_validation->run() == FALSE){
 
+		$data['ts'] = $this->Modelo_proyecto->devuelve_ts();
 		$data['clasificacion'] = $this->Modelo_proyecto->devuelve_clasificaciones();
 		$data['ambito'] = $this->Modelo_proyecto->devuelve_ambitos_aplicacion();
 		$data['quien'] = $this->Modelo_proyecto->devuelve_quien_puede();
@@ -2251,31 +2152,24 @@ public function revision_ficha(){
 		$data['req'] = $this->Modelo_proyecto->devuelve_ts_req($this->uri->segment(3));
 		$data['tramites'] = $this->Modelo_proyecto->devuelve_tramites();
 		
-		$ts=($this->uri->segment(3));
+		$data['ficha_tec'] = $this->Modelo_proyecto->datos_fichatec($this->uri->segment(3));
         $data['disposicion'] = $this->Modelo_proyecto->devuelve_leyes();
-        $data['fundamentos'] = $this->Modelo_proyecto->devuelve_fundamentos($ts);
+        $data['fundamentos'] = $this->Modelo_proyecto->devuelve_fundamentos($this->uri->segment(4));
 
-
-        $data['ts'] = $this->Modelo_proyecto->devuelve_ts();
-
-		$data['ficha_tec'] = $this->Modelo_proyecto->datos_fichatec($ts);
+		
 
 
 		$this->load->view('templates/panel/header',$data);
 		$this->load->view('templates/panel/menu',$data);
-		$this->load->view('templates/panel/revision_ficha',$data);
+		$this->load->view('templates/panel/revisionn_ficha',$data);
 		$this->load->view('templates/panel/footer');
+		//die(var_dump($data['ficha_tec']));
+		
 		}else{
-			$data = array(
-				'validacion' => $this->input->post('nombre_a')
-				);
-
-
-				$this->Modelo_proyecto->actualiza_area($this->input->post('id_area'),$data);
-				header('Location:'.base_url('index.php/proyecto/areas').'');
+		
 		}
 	}else{
-			header('Location:'.base_url('index.php/proyecto/areas').'');
+			header('Location:'.base_url('index.php/proyecto/fichas_tecnicas').'');
 	}
 
 }

@@ -31,13 +31,11 @@
                             } 
                         ?>
                     </option>
-                </select>
+      </select>
       </br>
-      <div class="panel panel-primary">
+      <div class="panel panel-warning">
+        <div class="panel-heading" >En caso de ser un nuevo requisito llene el siguiente campo</div>
     <div class="panel-body">
-
-      <label for="nuevo_paso"><b>En caso de ser un nuevo requisito llene el siguiente campo</b><span class="asterisco"></span> </label>
-      </br>
 			<label for="nuevo_paso">Descripción<span class="asterisco"></span> </label>
 			<input type="text" class="form-control" id="uno" name="nuevo_requisito" placeholder="Ingresa el nuevo requisito" value="">
 		  </br>
@@ -55,12 +53,18 @@
       </br>
      </div>
       </div>
-      <label for="nuevo_paso">Anexar archivo<span class="asterisco"></span> </label>
-      <input type="file" class="file" id="file" name="mi_archivo">
+      <!--<label for="nuevo_paso">Anexar archivo<span class="asterisco"></span> </label>
+      <input type="file" class="file" id="file" name="mi_archivo">-->
       </br>
       <div class="form-inline">
-      <label for="nuevo_paso">N° de originales<span class="asterisco"></span> </label>
-      <input type="number" class="form-control" name="original">
+      <label for="original">Original<span class="asterisco"></span> </label>
+      <div class="radio">
+            <label><input type="radio" name="original" value="NO" <?php if(set_value('original')=='NO') echo "checked";?>>Trámite</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="original" value="SI" <?php if(set_value('tipo')=='SI') echo "checked";?>>Servicio</label>
+        </div>
+        <?php echo form_error('original');?>
       </br>
       <label for="nuevo_paso">N° de copias<span class="asterisco"></span> </label>
       <input type="number" class="form-control" name="copias">

@@ -16,7 +16,7 @@
 				<th>Correo</th>
 				<th>Privilegio</th>
 				<th>Activo</th>
-				<th>Edita usuario</th>
+				<!--<th>Edita usuario</th>-->
 				<th>Asigna privilegio</th>
 
 		      </tr>
@@ -33,7 +33,7 @@
 						<td><?php echo $u->correo; ?></td>
 						<td><?php echo $u->nombre_privilegio; ?></td>
 						<td><?php if($u->activo == '1') echo "Si"; else echo "No"; ?></td>
-		        <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/edita_usuario/<?php echo $u->id_usuario;?>" role="button"><span class="glyphicon glyphicon-pencil"></span> Editar</a></td>
+		        <!--<td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/edita_persona/<?php echo $u->id_usuario;?>" role="button"><span class="glyphicon glyphicon-pencil"></span> Editar</a></td>-->
 		        <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/asigna_privilegio/<?php echo $u->id_usuario;?>" role="button"><span class="glyphicon glyphicon-plus"></span> Asignar privilegio</a></td>
 		      </tr>
 		     <?php

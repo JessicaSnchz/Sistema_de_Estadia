@@ -221,14 +221,16 @@ class Modelo_proyecto extends CI_Model{
 		$this->db->update('dependencia', $data);
 	}
 
+	function elimina_dep($data){
+		$this->db->delete('dependencia', $data);
+	}
+
 	//---------Domicilios----------------
 	function inserta_domicilio($data){
 		$this->db->insert('domicilio',$data);
 		return $this->db->insert_id();
-
-		
-
 	}
+
 	function datos_domicilio($data){
 		$this->db->select('*');
 		$this->db->from('domicilio');
@@ -243,6 +245,10 @@ class Modelo_proyecto extends CI_Model{
 		$this->db->where('id_dom', $id_dom);
 		$this->db->update('domicilio', $data);
 
+	}
+
+	function elimina_dom($data){
+		$this->db->delete('domicilio', $data);
 	}
 
 	//-------------Leyes y fundamentos -------------
@@ -358,6 +364,10 @@ class Modelo_proyecto extends CI_Model{
 		$this->db->update('areas', $data);
 	}
 
+	function elimina_area($data){
+		$this->db->delete('areas', $data);
+	}
+
      //---------------- Cargos--------
 
 	function devuelve_cargos(){
@@ -398,6 +408,10 @@ class Modelo_proyecto extends CI_Model{
 		$this->db->update('cargos', $data);
 	}
 
+	function elimina_cargo($data){
+		$this->db->delete('cargos', $data);
+	}
+
 		//-- Secciones ----
 
 	function devuelve_secciones(){
@@ -421,6 +435,9 @@ class Modelo_proyecto extends CI_Model{
 	function actualiza_seccion($id_seccion,$data){
 		$this->db->where('id_seccion', $id_seccion);
 		$this->db->update('seccion', $data);
+	}
+	function delete_seccion($data){
+		$this->db->delete('seccion', $data);
 	}
 
 	//--Sección Privilegio---
@@ -502,7 +519,7 @@ class Modelo_proyecto extends CI_Model{
 		$query = $this->db->get();
 		return $query->row_array();
 	}
-//----------------usuarios---------------------------
+//----------------usuarios y personas---------------------------
 	function devuelve_usuarios(){
 		$this->db->select('u.*,p.*,pr.*');
 		$this->db->from('persona AS p');
@@ -525,11 +542,23 @@ class Modelo_proyecto extends CI_Model{
 	}
 
 	function actualiza_usuario_privilegio($id_usuario,$data){
-
 		$this->db->where('id_usuario', $id_usuario);
 		$this->db->update('usuario', $data);
 	}
 
+	function datos_persona($data){
+		$this->db->select('*');
+		$this->db->from('persona');
+		$this->db->where('id_persona',$data);
+
+		$query = $this->db->get();
+		return $query->row_array();
+	}
+
+	function actualiza_persona($id_persona,$data){
+		$this->db->where('id_persona', $id_persona);
+		$this->db->update('persona', $data);
+	}
 //--------------modalidades---------------------------------------------
 	function devuelve_modalidades(){
 		$query = $this->db->get('modalidades');
@@ -555,6 +584,9 @@ class Modelo_proyecto extends CI_Model{
 		$this->db->update('modalidades', $data);
 	}
 
+	function elimina_modalidad($data){
+		$this->db->delete('modalidades', $data);
+	}
 //----------------------clasificaciones---------------------------------
 	function devuelve_clasificaciones(){
 		$query = $this->db->get('clasificacion');
@@ -578,6 +610,10 @@ class Modelo_proyecto extends CI_Model{
 	function actualiza_clasificacion($id_clasificacion,$data){
 		$this->db->where('id_clasificacion', $id_clasificacion);
 		$this->db->update('clasificacion', $data);
+	}
+
+	function elimina_clasificacion($data){
+			$this->db->delete('clasificacion', $data);
 	}
 //--------------------------ámbitos de aplicación-----------------------
 	function devuelve_ambitos_aplicacion(){
@@ -816,8 +852,7 @@ function elimina_archivo($id_archivo){
     }
 
     function datos_fichatec($id_ficha){
-		function devuelve_fichas_ts(){
-    	$this->db->select('ts.*, f.*, u.*, p.*, a.*, d.*');
+		$this->db->select('ts.*, f.*, u.*, p.*, a.*, d.*');
 		$this->db->from(' tramites_servicios as ts');
 		$this->db->join('ficha_tecnica AS f','ts.id_ts = f.fk_ts ');
 		$this->db->join('usuario AS u','f.fk_us = u.id_usuario ');
@@ -828,8 +863,8 @@ function elimina_archivo($id_archivo){
 		$this->db->group_by('f.id_ficha');
 		
 		$query = $this->db->get();
-		return $query->result();	
-    }
+		return $query->row_array();	
+    
 	}
 
 //________________________________versiones---------------------------------

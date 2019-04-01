@@ -16,6 +16,7 @@
 		        <th>Ubicación</th>
 		        <th>Horario</th>
 		        <th>Edición</th>
+		        <th>Eliminar</th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -31,6 +32,7 @@
 		       <td><?php echo $a->dias;?><br/><?php echo $a->horas;?> </td>
 
 		        <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/edita_area/<?php echo $a->id_area;?>" role="button"><span class="glyphicon glyphicon-pencil"></span> Editar</a></td>
+		        <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/elimina_areas/<?php echo $a->id_area;?>" role="button"><span class="glyphicon glyphicon-trash"></span> Eliminar</a></td>
 		      </tr>
 		        <?php
 		 		}

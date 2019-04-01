@@ -14,6 +14,7 @@
 		        <th>URL</th>
 		        <th>Aparece en menú</th>
 		        <th>Edición</th>
+		         <th>Eliminar</th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -36,6 +37,7 @@
 		        	<span class="label label-<?php echo $etiqueta;?>"><?php echo $texto;?></span>
 		        </td>
 		        <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/edita_seccion/<?php echo $s->id_seccion;?>" role="button"><span class="glyphicon glyphicon-pencil"></span> Editar</a></td>
+		        <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/elimina_seccion/<?php echo $s->id_seccion;?>" role="button"><span class="glyphicon glyphicon-trash"></span> Editar</a></td>
 		      </tr>
 		     <?php
 		 		}

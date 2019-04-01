@@ -13,7 +13,7 @@
 		        <th>N° de horario</th>
 		        <th>Dias</th>
 		        <th>Horas</th>
-		        <th>Edición</th>
+		        <th>Eliminar</th>
 		      </tr>
 		    </thead>
 		    <tbody>

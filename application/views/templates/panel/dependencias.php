@@ -18,6 +18,8 @@
 		        <th>Dirección</th>
 		        <th>Código postal</th>
 		        <th>Edición</th>
+		         <th>Eliminar</th>
+
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -35,6 +37,7 @@
 		        <td><?php echo $d->municipio.", ".$d->colonia.", calle ".$d->calle.", número int. ".$d->num_int.", número ext.".$d->num_ext.", ".$d->estado ; ?></td>
 		        <td><?php echo $d->c_p?></td>
 		        <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/edita_dependencia/<?php echo $d->id_depe;?>/<?php echo $d->id_dom;?>" role="button"><span class="glyphicon glyphicon-pencil"></span> Editar</a></td>
+		        <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/elimina_dep_dom/<?php echo $d->id_depe;?>/<?php echo $d->id_dom;?>" role="button"><span class="glyphicon glyphicon-trash"></span> Eliminar</a></td>
 		      </tr> 
 		      	 		     
 		         <?php

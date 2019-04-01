@@ -12,7 +12,8 @@
 		      <tr>
 		        <th>Cargo</th>
 		        <th>Descripción</th>
-		        <th>Edición</th>
+		     
+		         <th>Eliminar</th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -22,7 +23,8 @@
 		      <tr>
 		        <td><?php echo $c->nombre; ?></td>
 		        <td><?php echo $c->descripcion_c; ?></td>
-		        <td><a class="btn btn-primary btn-sm" href="" role="button"><span class="glyphicon glyphicon-pencil"></span> Editar</a></td>
+		        
+		         <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/elimina_cargo/<?php echo $c->id_cargo;?>" role="button"><span class="glyphicon glyphicon-trash"></span> Eliminar</a></td>
 		      </tr>
 		        <?php
 		 		}

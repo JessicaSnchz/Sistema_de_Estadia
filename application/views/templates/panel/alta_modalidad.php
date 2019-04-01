@@ -17,7 +17,7 @@
        	?>
  		 <label for="Nombre">Modalidad <span class="asterisco">*</span> </label>
       <input type="text" class="form-control" name="nombre_modalidad" value="<?php echo set_value('nombre_modalidad');?>" id="nombre_modalidad" placeholder="Nombre de la modalidad">
-      <?php echo form_error('nombre');?>
+      <?php echo form_error('nombre_modalidad');?>
       </br>
       <label for="Nombre">Descripción <span class="asterisco">*</span> </label>
       <textarea  type="text" class="form-control" name="descripcion" value="<?php echo set_value('descripcion');?>" id="descripcion" placeholder="Describa la modalidad"></textarea>

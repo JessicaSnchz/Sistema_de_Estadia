@@ -15,7 +15,7 @@
         	echo form_open('proyecto/alta_cargo',$atributos);
        	 ?>
        		<label for="Nombres">Nombre del cargo<span class="asterisco">*</span> </label>
-			<input type="text" class="form-control" name="nombre" value="<?php echo set_value('nombre');?>" id=Nombres"" placeholder="Nombre del cargo">
+			<input type="text" class="form-control" name="nombre" value="<?php echo set_value('nombre');?>" placeholder="Nombre del cargo">
 			<?php echo form_error('nombre');?>
  			</br>
  			<label for="Nombres">Descripción <span class="asterisco">*</span> </label>
