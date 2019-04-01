@@ -10,22 +10,22 @@
         </ol>
 
 
-        <h1 class="page-header">Nueva ficha técnica</h1>
+        <h1 class="page-header">Nueva ficha técnica</h1> 
         <div class="col-md-6">
 
  <div class="panel panel-primary">
       <div class="panel-heading">Sobre los pasos del Trámite/Servicio</div>
     <div class="panel-body">
 
-    <form  name="formulario"  class="form" method="POST" action="<?php echo base_url()?>index.php/proyecto/alta_fichat_2_1/<?php echo $ts['id_ts']; ?>">
+<form  name="formulario"  class="form" method="POST" action="<?php echo base_url()?>index.php/proyecto/alta_fichat_2_1/<?php echo $ts['id_ts']; ?>">
   		
-  		<div class="form-group" id="f">
+  		<div class="form-group">
   			
-  			<label for="paso">N° paso<span class="asterisco">*</span> </label>
+  			<label for="paso">Ingrese los pasos del trámite/servicio en orden<span class="asterisco"></span></label><br/><br/>
+        <label for="orden">Número<span class="asterisco">*</span> </label>
   			<input type="number" id="t1" class="form-control" name="orden" value="<?php echo set_value('orden');?>">
   			<?php echo form_error('orden');?> 
-			</br>
-			<label for="nuevo_paso">Descripción<span class="asterisco"></span> </label>
+			<label for="nuevo_paso">Descripción del paso<span class="asterisco">*</span> </label>
 			<input type="text"   class="form-control" id="t2"  name="nuevo_paso"value="<?php echo set_value('nuevo_paso');?>" placeholder="Describa el nuevo paso">
 			<?php echo form_error('nuevo_paso');?>
 		</br>
@@ -34,13 +34,14 @@
 		</br>
 	    </div>
 		
-<input type="submit" name="" value="enviar" class="btn-primary" onclick=""> 
-		</form>                   
+    <input type="submit" name="" value="enviar" class="btn-primary" onclick=""> 
+</form>                   
                  
     </div><!--panel body-->
-</div><!--panel primary-->
+    </div><!--panel primary-->
 
-<div class="panel panel-primary">
+  <div class="panel panel-primary">
+    <div class="panel-heading">Mis pasos</div>
     <div class="panel-body">
 
     	<table class="table table-hover" >

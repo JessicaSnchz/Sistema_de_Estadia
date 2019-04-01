@@ -7,7 +7,7 @@
           <li><a href="<?php echo base_url();?>index.php/proyecto/alta_fichat_4">Paso 4: Sobre los fundamentos jurídicos</a></li>
           <li class="active">Sobre aspectos generales</li>
 		</ol>
-
+ 
 
         <h1 class="page-header">Nueva ficha técnica</h1>
         <div class="col-md-12">

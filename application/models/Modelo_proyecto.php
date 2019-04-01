@@ -368,6 +368,16 @@ class Modelo_proyecto extends CI_Model{
 		$this->db->delete('areas', $data);
 	}
 
+	function horario_area($data){
+		$this->db->select('h.*');
+		$this->db->from('horario AS h');
+		$this->db->join('areas AS a','h.id_horario = a.id_horario');
+		$this->db->where('a.id_area',$data);
+
+		$query = $this->db->get();
+		return $query->row_array();
+	}
+
      //---------------- Cargos--------
 
 	function devuelve_cargos(){
@@ -587,6 +597,16 @@ class Modelo_proyecto extends CI_Model{
 	function elimina_modalidad($data){
 		$this->db->delete('modalidades', $data);
 	}
+
+	function ts_modalidad($data){
+		$this->db->select('m.*');
+		$this->db->from('modalidades as m');
+		$this->db->join('tramites_servicios as ts','m.id_modalidad = ts.fk_modalidad');
+		$this->db->where('ts.id_ts',$data);
+
+		$query = $this->db->get();
+		return $query->row_array();
+	}
 //----------------------clasificaciones---------------------------------
 	function devuelve_clasificaciones(){
 		$query = $this->db->get('clasificacion');
@@ -615,6 +635,17 @@ class Modelo_proyecto extends CI_Model{
 	function elimina_clasificacion($data){
 			$this->db->delete('clasificacion', $data);
 	}
+
+	function fts_clasificacion($data){
+		$this->db->select('c.*');
+		$this->db->from('clasificacion as c');
+		$this->db->join('tramites_servicios as ts','c.id_clasificacion = ts.fk_rpm');
+		$this->db->where('ts.id_ts',$data);
+
+
+		$query = $this->db->get();
+		return $query->row_array();
+	}
 //--------------------------ámbitos de aplicación-----------------------
 	function devuelve_ambitos_aplicacion(){
 		$query = $this->db->get('ambito_de_aplicacion');
@@ -623,6 +654,28 @@ class Modelo_proyecto extends CI_Model{
 
 	function devuelve_quien_puede(){
 		$query = $this->db->get('quien_puede');
+		return $query->result();
+	}
+
+	function ts_ambito($data){
+		$this->db->select('a.*');
+		$this->db->from('ambito_de_aplicacion as a');
+		$this->db->join('tramites_servicios as ts','a.id_ambito_de_a = ts.fk_ambito_de_a');
+		$this->db->where('ts.id_ts',$data);
+
+		$query = $this->db->get();
+		return $query->row_array();
+	}
+
+	function ts_quien($data){
+		$this->db->select('q.*,qa.*');
+		$this->db->from('quien_puede as q');
+		$this->db->join('quien_ambito_aplicacion as qa','q.id_quien_p = qa.fk_quien_p');
+		$this->db->join('tramites_servicios as ts','qa.fk_ts = ts.id_ts');
+		$this->db->where('ts.id_ts',$data);
+		$this->db->group_by('qa.id_quien_ts');
+
+		$query = $this->db->get();
 		return $query->result();
 	}
 //---------------------------orden--------------------------
@@ -852,13 +905,14 @@ function elimina_archivo($id_archivo){
     }
 
     function datos_fichatec($id_ficha){
-		$this->db->select('ts.*, f.*, u.*, p.*, a.*, d.*');
+		$this->db->select('ts.*, f.*, u.*, p.*, a.*, d.*,dom.*');
 		$this->db->from(' tramites_servicios as ts');
 		$this->db->join('ficha_tecnica AS f','ts.id_ts = f.fk_ts ');
 		$this->db->join('usuario AS u','f.fk_us = u.id_usuario ');
 		$this->db->join('persona AS p','u.id_persona = p.id_persona ');
 		$this->db->join('areas AS a','p.id_area = a.id_area');
 		$this->db->join('dependencia AS d','a.id_depe = d.id_depe');
+		$this->db->join('domicilio AS dom','d.id_dom = dom.id_dom');
 		$this->db->where('f.id_ficha',$id_ficha);
 		$this->db->group_by('f.id_ficha');
 		
@@ -867,10 +921,23 @@ function elimina_archivo($id_archivo){
     
 	}
 
+	function actualiza_validacion($id_ft, $data){
+		$this->db->where('id_ficha', $id_ft);
+		$this->db->update('ficha_tecnica', $data);
+	}
 //________________________________versiones---------------------------------
     function inserta_version($data){
     	$this->db->insert('versiones',$data);
     }
 
+    function version_ft($data){
+    	$this->db->select('v.*');
+		$this->db->from('versiones as v');
+		$this->db->join('ficha_tecnica as ft','v.fk_ficha = ft.id_ficha');
+		$this->db->where('id_ficha',$data);
+
+		$query = $this->db->get();
+		return $query->row_array();
+    }
 
 }

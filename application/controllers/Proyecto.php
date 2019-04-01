@@ -1662,25 +1662,6 @@ public function sript_pasos(){
 
 //----------------------fichas técnicas--------------------------------------
 
-public function fichas_tecnicas(){
-
-$this->Modelo_proyecto->valida_sesion();
-	$this->Modelo_proyecto->Estar_aqui();
-	$data['sesion'] = $this->Modelo_proyecto->datos_sesion();
-	$data['menu'] = $this->Modelo_proyecto->datos_menu();
-
-	$data['clasificacion'] = $this->Modelo_proyecto->devuelve_clasificaciones();
-	$data['fichas_tecnicas'] = $this->Modelo_proyecto->devuelve_fichas_tec();
-	//$data['privilegios'] = $this->Modelo_proyecto->devuelve_privilegios();
-
-
-	$this->load->view('templates/panel/header',$data);
-	$this->load->view('templates/panel/menu',$data);
-	$this->load->view('templates/panel/mis_fichas',$data);
-	$this->load->view('templates/panel/footer');
-
-
-}
 
 public function alta_fichat_1(){
 	$this->Modelo_proyecto->valida_sesion();
@@ -1700,7 +1681,7 @@ public function alta_fichat_1(){
 	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 	<strong>Alerta </strong>','</div>');
 
-	$this->form_validation->set_rules('nombre','Nombre', 'required|min_length[3]|max_length[100]');
+	$this->form_validation->set_rules('nombre','Nombre', 'required|min_length[3]|max_length[100]|is_unique[tramites_servicios.nombre_ts],',array( 'required' => 'No has proporcionado %s.', 'is_unique' => 'Este %s ya existe.' ));
 	$this->form_validation->set_rules('tipo','Tipo', 'required');
 	$this->form_validation->set_rules('fk_rpm','Registros públicos municipales', 'required');
 	$this->form_validation->set_rules('descripcion_ft','Descripción', 'required|min_length[3]|max_length[250]');
@@ -1738,7 +1719,8 @@ public function alta_fichat_1(){
 				'concepto_pago' => $this->input->post('concepto_pago'),
 				//'fk_archivo' => $this->input->post('identificador_c'),
 				'ficta' => $this->input->post('ficta'),
-				'producto_final' => $this->input->post('producto_final')
+				'producto_final' => $this->input->post('producto_final'),
+				'fk_ambito_de_a' => $this->input->post('ambito_de_a'),
 				);
 //var_dump($data_ts); die();
 			$id_ts=$this->Modelo_proyecto->inserta_ts($data_ts);
@@ -1749,8 +1731,7 @@ public function alta_fichat_1(){
 				foreach ($data2 as $q) {
 							$data_final=array(
 								'fk_ts'=>($id_ts),
-								'fk_quien_p'=>($q),
-								'fk_ambito_de_a' => $this->input->post('ambito_de_a'),
+								'fk_quien_p'=>($q)
 							);
 			$this->Modelo_proyecto->inserta_quien_ambito_ts($data_final);
 			
@@ -1804,6 +1785,8 @@ public function alta_fichat_2_1(){
 		  <strong>Alerta </strong>','</div>');
 
 		$this->form_validation->set_rules('orden','Orden', 'required|min_length[1]|max_length[2]');
+		//$this->form_validation->set_rules('fk_paso','Paso', 'required');
+		$this->form_validation->set_rules('nuevo_paso','Paso', 'required|min_length[3]|max_length[50]' );
 		//no hago validavión por que ameritaría crear un script de clickOn para saber que campos serán obligatorios, asi que solo use el campo de nuevo paso como referencia
 	if($this->form_validation->run()==FALSE){
 	$data['id_ts'] = $this->uri->segment(3);
@@ -1816,11 +1799,12 @@ public function alta_fichat_2_1(){
 		$this->load->view('templates/panel/footer');
 
 		}else{ 
+					
 					$data_nuevo = array(
 						'descripcion_paso' => $this->input->post('nuevo_paso')
 					);
 					$id_paso = $this->Modelo_proyecto->inserta_nuevo_paso($data_nuevo);
-			
+
 					$data_final = array(
 						'fk_ts'	=> $this->input->post('id_ts'),
 						'fk_paso' => ($id_paso),
@@ -1836,6 +1820,39 @@ public function alta_fichat_2_1(){
 		header('Location:'.base_url('index.php/proyecto/alta_fichat_2_1').'');
 	}
 }
+
+/*public function nuevo_paso(){
+
+	$data['sesion'] = $this->Modelo_proyecto->datos_sesion();
+	$data['menu'] = $this->Modelo_proyecto->datos_menu();
+
+	$data['medios'] = $this->Modelo_proyecto->devuelve_medios();
+
+	$this->load->library('form_validation');
+	$this->load->helper(array('form', 'url'));
+
+	$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	<strong>Alerta </strong>','</div>');
+
+	$this->form_validation->set_rules('nuevo_paso','Paso', 'required|min_length[3]|max_length[50]|trim|is_unique[pasos.descripcion_paso],',array( 'required' => 'No has proporcionado %s.', 'is_unique' => 'Este %s ya existe.' ));
+	
+	
+
+	if($this->form_validation->run()==FALSE){
+		$this->load->view('templates/panel/header',$data);
+		$this->load->view('templates/panel/menu',$data);
+		$this->load->view('templates/panel/alta_ficha_2_1',$data);
+		$this->load->view('templates/panel/footer');
+
+	}else{
+		if($this->input->post()){
+			
+
+			header('Location:'.base_url('index.php/proyecto/clasificaciones').'');
+		}
+	}
+}*/
 
 public function elimina_ts_paso(){
 
@@ -1865,10 +1882,14 @@ public function alta_fichat_3_1(){
 	
 	$this->load->library('form_validation');
 	$this->load->helper(array('form', 'url'));
+
 	$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
 		  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		  <strong>Alerta </strong>','</div>');
 	$this->form_validation->set_rules('id_ts','id_ts', 'required');
+	$this->form_validation->set_rules('orden','Orden', 'required');
+
+
 
 		//no hago validavión por que ameritaría crear un script de clickOn para saber que campos serán obligatorios, asi que solo use el campo de nuevo paso como referencia
 	if($this->form_validation->run()==fALSE){
@@ -2007,6 +2028,9 @@ public function alta_fichat_4(){
 		  <strong>Alerta </strong>','</div>');
 
 		$this->form_validation->set_rules('id_ts','Trámite y servicio', 'required');
+		$this->form_validation->set_rules('enunciado','Fundamento', 'required');
+		$this->form_validation->set_rules('fk_ley','Disposición', 'required');
+		
 		//no hago validavión por que ameritaría crear un script de clickOn para saber que campos serán obligatorios, asi que solo use el campo de nuevo paso como referencia
 	if($this->form_validation->run()==FALSE){
 	$data['id_ts'] = $this->uri->segment(3);
@@ -2082,7 +2106,7 @@ public function alta_fichat_5(){
 				);
 			$id_ficha=$this->Modelo_proyecto->inserta_ficha_tec($data_ficha);
 				
-				var_dump($this->input->post('fecha_actual')); die();
+				
 
 				$data_version =array(
 					'version'=> ($ver),
@@ -2133,26 +2157,30 @@ public function revision_ficha(){
 		<strong>Alerta </strong>','</div>');
 
 	$this->form_validation->set_rules('validacion','Validación', 'required');
-	$this->form_validation->set_rules('comentarios','Comentarios', 'min_length[10]|max_length[300]');
+	
 	//$this->form_validation->set_rules('dependencia','Dependencia','trim|required|xss_clean');
 	//$this->form_validation->set_rules('horario','Horario','trim|required|xss_clean')
 
 		if ($this->form_validation->run() == FALSE){
 
 		$data['ts'] = $this->Modelo_proyecto->devuelve_ts();
-		$data['clasificacion'] = $this->Modelo_proyecto->devuelve_clasificaciones();
-		$data['ambito'] = $this->Modelo_proyecto->devuelve_ambitos_aplicacion();
-		$data['quien'] = $this->Modelo_proyecto->devuelve_quien_puede();
-		$data['modalidad'] = $this->Modelo_proyecto->devuelve_modalidades();
+		$data['clas_ts'] = $this->Modelo_proyecto->fts_clasificacion($this->uri->segment(4));
+		$data['version_ft'] = $this->Modelo_proyecto->version_ft($this->uri->segment(3));
+		$data['ambito'] = $this->Modelo_proyecto->ts_ambito($this->uri->segment(4));
+		$data['quien'] = $this->Modelo_proyecto->ts_quien($this->uri->segment(4));
+		$data['modalidad'] = $this->Modelo_proyecto->ts_modalidad($this->uri->segment(4));
 		
-		$data['pasos'] = $this->Modelo_proyecto->devuelve_pasos();
+		$data['pasos'] = $this->Modelo_proyecto->devuelve_pasitos($this->uri->segment(4));
         $data['pasitos'] = $this->Modelo_proyecto->devuelve_pasitos($this->uri->segment(3));
        
         $data['requisitos'] = $this->Modelo_proyecto->devuelve_requisitos();
-		$data['req'] = $this->Modelo_proyecto->devuelve_ts_req($this->uri->segment(3));
+		$data['req'] = $this->Modelo_proyecto->devuelve_ts_req($this->uri->segment(4));
 		$data['tramites'] = $this->Modelo_proyecto->devuelve_tramites();
 		
 		$data['ficha_tec'] = $this->Modelo_proyecto->datos_fichatec($this->uri->segment(3));
+        $dato_depen =$this->Modelo_proyecto->datos_fichatec($this->uri->segment(3));
+        $id_area= $dato_depen['id_area'];
+		$data['horario'] = $this->Modelo_proyecto->horario_area($id_area);
         $data['disposicion'] = $this->Modelo_proyecto->devuelve_leyes();
         $data['fundamentos'] = $this->Modelo_proyecto->devuelve_fundamentos($this->uri->segment(4));
 
@@ -2163,13 +2191,23 @@ public function revision_ficha(){
 		$this->load->view('templates/panel/menu',$data);
 		$this->load->view('templates/panel/revisionn_ficha',$data);
 		$this->load->view('templates/panel/footer');
-		//die(var_dump($data['ficha_tec']));
+		//die(var_dump($data['horario']));
 		
-		}else{
+		}else{ 
+			if ($this->input->post()) {
+			$data= array(
+
+					'validacion' => $this->input->post('validacion'),
+			);
+
+			//die(var_dump(expression));
+			$this->Modelo_proyecto->actualiza_validacion($this->input->post('id_ficha'),$data);
+			header('Location:'.base_url('index.php/proyecto/fichas').'');
+		}
 		
 		}
 	}else{
-			header('Location:'.base_url('index.php/proyecto/fichas_tecnicas').'');
+			header('Location:'.base_url('index.php/proyecto/fichas').'');
 	}
 
 }
@@ -2188,7 +2226,26 @@ public function mis_fichas(){
 			//die(var_dump($nombre));
    
 	$data['fichas_tecnicas'] = $this->Modelo_proyecto->devuelve_fichas_ts_us($id_usuario);
-    
+    $data['ts'] = $this->Modelo_proyecto->devuelve_ts();
+		$data['clas_ts'] = $this->Modelo_proyecto->fts_clasificacion($this->uri->segment(4));
+		$data['version_ft'] = $this->Modelo_proyecto->version_ft($this->uri->segment(3));
+		$data['ambito'] = $this->Modelo_proyecto->ts_ambito($this->uri->segment(4));
+		$data['quien'] = $this->Modelo_proyecto->ts_quien($this->uri->segment(4));
+		$data['modalidad'] = $this->Modelo_proyecto->ts_modalidad($this->uri->segment(4));
+		
+		$data['pasos'] = $this->Modelo_proyecto->devuelve_pasitos($this->uri->segment(4));
+        $data['pasitos'] = $this->Modelo_proyecto->devuelve_pasitos($this->uri->segment(3));
+       
+        $data['requisitos'] = $this->Modelo_proyecto->devuelve_requisitos();
+		$data['req'] = $this->Modelo_proyecto->devuelve_ts_req($this->uri->segment(4));
+		$data['tramites'] = $this->Modelo_proyecto->devuelve_tramites();
+		
+		$data['ficha_tec'] = $this->Modelo_proyecto->datos_fichatec($this->uri->segment(3));
+        $dato_depen =$this->Modelo_proyecto->datos_fichatec($this->uri->segment(3));
+        $id_area= $dato_depen['id_area'];
+		$data['horario'] = $this->Modelo_proyecto->horario_area($id_area);
+        $data['disposicion'] = $this->Modelo_proyecto->devuelve_leyes();
+        $data['fundamentos'] = $this->Modelo_proyecto->devuelve_fundamentos($this->uri->segment(4));
 
 
 	$this->load->view('templates/panel/header',$data);
@@ -2198,6 +2255,47 @@ public function mis_fichas(){
 
 }
 
+public function fichas_tecnicas(){
+
+	$this->Modelo_proyecto->valida_sesion();
+	$this->Modelo_proyecto->Estar_aqui();
+
+	$data['sesion'] = $this->Modelo_proyecto->datos_sesion();
+	$data['menu'] = $this->Modelo_proyecto->datos_menu();
+	$datos_usuario=($this->Modelo_proyecto->datos_sesion());
+			//die(var_dump($nombre));
+   $nombre= $datos_usuario['nombre'];
+			$id_usuario= $datos_usuario['id_usuario'];
+   
+	$data['fichas_tecnicas'] = $this->Modelo_proyecto->devuelve_fichas_ts_us($id_usuario);
+    $data['ts'] = $this->Modelo_proyecto->devuelve_ts();
+		$data['clas_ts'] = $this->Modelo_proyecto->fts_clasificacion($this->uri->segment(4));
+		$data['version_ft'] = $this->Modelo_proyecto->version_ft($this->uri->segment(3));
+		$data['ambito'] = $this->Modelo_proyecto->ts_ambito($this->uri->segment(4));
+		$data['quien'] = $this->Modelo_proyecto->ts_quien($this->uri->segment(4));
+		$data['modalidad'] = $this->Modelo_proyecto->ts_modalidad($this->uri->segment(4));
+		
+		$data['pasos'] = $this->Modelo_proyecto->devuelve_pasitos($this->uri->segment(4));
+        $data['pasitos'] = $this->Modelo_proyecto->devuelve_pasitos($this->uri->segment(3));
+       
+        $data['requisitos'] = $this->Modelo_proyecto->devuelve_requisitos();
+		$data['req'] = $this->Modelo_proyecto->devuelve_ts_req($this->uri->segment(4));
+		$data['tramites'] = $this->Modelo_proyecto->devuelve_tramites();
+		
+		$data['ficha_tec'] = $this->Modelo_proyecto->datos_fichatec($this->uri->segment(3));
+        $dato_depen =$this->Modelo_proyecto->datos_fichatec($this->uri->segment(3));
+        $id_area= $dato_depen['id_area'];
+		$data['horario'] = $this->Modelo_proyecto->horario_area($id_area);
+        $data['disposicion'] = $this->Modelo_proyecto->devuelve_leyes();
+        $data['fundamentos'] = $this->Modelo_proyecto->devuelve_fundamentos($this->uri->segment(4));
+
+
+	$this->load->view('templates/panel/header',$data);
+	$this->load->view('templates/panel/menu',$data);
+	$this->load->view('templates/panel/mi_ficha',$data);
+	$this->load->view('templates/panel/footer');
+
+}
 
 
 

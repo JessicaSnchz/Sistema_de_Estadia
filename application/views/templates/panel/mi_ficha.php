@@ -1,10 +1,10 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   <ol class="breadcrumb">
       <li><a href="<?php echo base_url();?>index.php/proyecto/panel">Principal</a></li>
-      <li><a href="<?php echo base_url();?>index.php/proyecto/fichas">Fichas técnicas</a></li>
+      <li><a href="<?php echo base_url();?>index.php/proyecto/mis_fichas">Fichas técnicas</a></li>
       <li class="active">Ficha técnica actual</li>
     </ol> 
-      <form autocomplete="off" name="formulario" class="form" method="POST" action="<?php echo base_url()?>index.php/proyecto/revision_ficha/<?php echo $ficha_tec['id_ficha']; ?>/<?php echo $ficha_tec['fk_ts']; ?>">
+      <form autocomplete="off" name="formulario" class="form" method="POST" action="<?php echo base_url()?>index.php/proyecto/fichas_tecnicas/<?php echo $ficha_tec['id_ficha']; ?>/<?php echo $ficha_tec['fk_ts']; ?>">
         <div class="col-md-10">
           <div class="well well-sm">
               <h2 align="center" ><?php echo $ficha_tec['nombre_ts'] ?></h2>
@@ -179,25 +179,7 @@
               </div>
             </div>
           </div>
-        <div class="col-md-12">
-            <div class="panel panel-primary">
-              <div class="panel-heading">VALIDACIÓN DE LA FICHA</div>
-                <div class="panel-body">
-                  <label for="validacion">Validación <span class="asterisco">*</span></label><br/>
-                    <div class="radio">
-                      <label><input type="radio"  name="validacion" value="SI" <?php if(set_value('validacion')=='SI') echo "checked";?>>Aceptada</label>
-                    </div>
-                    <div class="radio">
-                      <label><input type="radio"  name="validacion" value="NO" <?php if(set_value('validacion')=='NO') echo "checked";?>>Denegada</label><br/><br/>
-                    </div>
-                  <!--<label for="comentarios">Comentarios</label>
-                  <textarea name="comentarios" class="form-control"></textarea><br/>-->
-                  <input type="hidden" name="id_ficha" value="<?php echo $ficha_tec['id_ficha']; ?>"><br/>
-                  <?php echo form_error('id_ficha');?>
-                  <button type="submit" class="btn btn-primary" >Guardar cambios</button><br/>
-                </div>
-            </div>
-          </div>
+        
         </div>
       </form>
 </div>

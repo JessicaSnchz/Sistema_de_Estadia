@@ -6,7 +6,7 @@
 
 
         <h1 class="page-header">Nueva ficha técnica</h1>
-        <div class="col-md-12">
+        <div class="col-md-12"> 
 
  <div class="panel panel-primary">
       <div class="panel-heading">Paso 1: Sobre el Trámite/Servicio</div>

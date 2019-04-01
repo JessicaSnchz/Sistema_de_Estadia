@@ -23,7 +23,7 @@
                 <td><?php echo $f->nombre_ts; ?></td>
                 <td><?php echo $f->fecha_elab; ?></td>
                 <td><?php echo $f->nombre; ?></td>
-                 <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/revision_ficha/<?php echo $f->fk_ts;?>" role="button"><span class="glyphicon glyphicon-ok"></span> Revisar</a></td>
+                 <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/fichas_tecnicas/<?php echo $f->id_ficha;?>/<?php echo $f->fk_ts;?>" role="button"><span class="glyphicon glyphicon-eye-open"></span> Ver</a></td>
                 
                 
             </tr>

@@ -1,11 +1,11 @@
 <div class="col-sm-2 col-sm-offset-9 col-md-10 col-md-offset-2 main">
 		<ol class="breadcrumb">
 		  <li><a href="<?php echo base_url();?>index.php/proyecto/panel">Principal</a></li>
-          <li><a href="<?php echo base_url();?>index.php/proyecto/alta_fichat_1">Paso 1: Sobre el Trámite/Servicio</a></li>
-          <li><a href="<?php echo base_url();?>index.php/proyecto/alta_fichat_2">Paso 2: Sobre los pasos</a></li>
-          <li><a href="<?php echo base_url();?>index.php/proyecto/alta_fichat_2">Paso 3: Sobre los requisitos</a></li>
+          <li><a href="">Paso 1: Sobre el Trámite/Servicio</a></li>
+          <li><a href="">Paso 2: Sobre los pasos</a></li>
+          <li><a href="">Paso 3: Sobre los requisitos</a></li>
           <li class="active">Sobre los fundamentos jurídicos</li>
-		</ol>
+		</ol> 
 
 
         <h1 class="page-header">Nueva ficha técnica</h1>
@@ -27,10 +27,12 @@
                         ?>
                     </option>
                 </select>
+                <?php echo form_error('fk_ley');?>
       </br>
       <label for="fundamento">Descripción del fundamento<span class="asterisco"></span> </label>
       <input type="text" class="form-control" name="enunciado" placeholder="Ingrese los artículos con sus respectivas fracciones, ejemplo: art.1,X,IX ; art.2,IV,etc.">
       </br>
+      <?php echo form_error('enunciado');?>
      
       <input type="hidden" name="id_ts" value="<?php echo $ts['id_ts']; ?>">
             <?php echo form_error('id_ts');?>
@@ -68,8 +70,8 @@
     <?php }?>                                                       
         </table>
     </br>
-    <a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/alta_fichat_5/<?php echo $ts['id_ts'];?>" role="button"><span class="glyphicon glyphicon-arrow-right"></span> Paso 5</a>
     </div><!--panel body-->
 </div><!--panel primary-->
+<a class="btn btn-success btn-lg" href="<?php echo base_url();?>index.php/proyecto/alta_fichat_5/<?php echo $ts['id_ts'];?>" role="button"><span class="glyphicon glyphicon-arrow-right"></span> Paso 5</a>
 </div>
 </div>

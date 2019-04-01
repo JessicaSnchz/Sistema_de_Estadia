@@ -12,6 +12,7 @@
                 <th>Clave</th>
                 <th>Nombre</th>
                 <th>Fecha de elaboración</th>
+                <th>Enlace</th>
                 <th>Dependencia</th>
                 <th>Válida</th>
                 <th></th>
@@ -33,6 +34,7 @@
                 <td class="<?php echo $etiqueta;?>"><?php echo $f->clave; ?></td>
                 <td class="<?php echo $etiqueta;?>"><?php echo $f->nombre_ts; ?></td>
                 <td class="<?php echo $etiqueta;?>"><?php echo $f->fecha_elab; ?></td>
+                <td class="<?php echo $etiqueta;?>"><?php echo $f->nombres." ".$f->ape_pat." ".$f->ape_mat;?></td>
                 <td class="<?php echo $etiqueta;?>"><?php echo $f->nombre; ?></td>
                 <td  class="<?php echo $etiqueta;?>"><?php echo $texto; ?>
     </td>

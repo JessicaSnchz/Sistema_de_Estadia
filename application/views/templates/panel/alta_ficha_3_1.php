@@ -6,7 +6,7 @@
           <li class="active">Paso 3: Sobre los requisitos</li>
         </ol>
 
-        <h1 class="page-header">Nueva ficha técnica</h1>
+        <h1 class="page-header">Nueva ficha técnica</h1> 
         <div class="col-md-9">
 
  <div class="panel panel-primary">
@@ -17,7 +17,7 @@
   		
   		<div class="form-group" id="f">
   			
-  			<label for="paso">N° paso<span class="asterisco">*</span> </label>
+  			<label for="paso">Número de requisito<span class="asterisco">*</span> </label>
   			<input type="number" id="t1" class="form-control" name="orden" value="<?php echo set_value('orden');?>">
   			<?php echo form_error('orden');?> 
         </br>
@@ -34,7 +34,7 @@
       </select>
       </br>
       <div class="panel panel-warning">
-        <div class="panel-heading" >En caso de ser un nuevo requisito llene el siguiente campo</div>
+        <div class="panel-heading" >En caso de ser un nuevo requisito llene los siguiente campos</div>
     <div class="panel-body">
 			<label for="nuevo_paso">Descripción<span class="asterisco"></span> </label>
 			<input type="text" class="form-control" id="uno" name="nuevo_requisito" placeholder="Ingresa el nuevo requisito" value="">
@@ -50,32 +50,8 @@
                         ?>
                     </option>
                 </select>
-      </br>
-     </div>
-      </div>
-      <!--<label for="nuevo_paso">Anexar archivo<span class="asterisco"></span> </label>
-      <input type="file" class="file" id="file" name="mi_archivo">-->
-      </br>
-      <div class="form-inline">
-      <label for="original">Original<span class="asterisco"></span> </label>
-      <div class="radio">
-            <label><input type="radio" name="original" value="NO" <?php if(set_value('original')=='NO') echo "checked";?>>Trámite</label>
-        </div>
-        <div class="radio">
-            <label><input type="radio" name="original" value="SI" <?php if(set_value('tipo')=='SI') echo "checked";?>>Servicio</label>
-        </div>
-        <?php echo form_error('original');?>
-      </br>
-      <label for="nuevo_paso">N° de copias<span class="asterisco"></span> </label>
-      <input type="number" class="form-control" name="copias">
-      </br>
-      </div>
-		  <input type="hidden" name="id_ts" value="<?php echo $ts['id_ts']; ?>">
-            <?php echo form_error('id_ts');?>
-		</br>
-	    </div>
-
-      <div class="panel panel-primary">
+      <br/>
+      <div class="panel panel-warning">
     <div class="panel-body">
       <label for="req_externo"><b>En caso de que el requisito sea externo llenar los siguientes campos</b></label>
     </br>
@@ -89,7 +65,29 @@
 
     </div>
   </div>
-		
+     </div>
+      </div>
+      <!--<label for="nuevo_paso">Anexar archivo<span class="asterisco"></span> </label>
+      <input type="file" class="file" id="file" name="mi_archivo">-->
+      </br>
+      <div class="form-inline">
+      <label for="original">Original<span class="asterisco"></span> </label><br>
+      <div class="radio">
+            <label><input type="radio" name="original" value="Si" <?php if(set_value('original')=='Si') echo "checked";?>>Si</label><br>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="original" value="No" <?php if(set_value('tipo')=='No') echo "checked";?>>No</label>
+        </div>
+        
+      </br>
+      <label for="nuevo_paso">N° de copias<span class="asterisco"></span> </label>
+      <input type="number" class="form-control" name="copias">
+      </br>
+      </div>
+		  <input type="hidden" name="id_ts" value="<?php echo $ts['id_ts']; ?>">
+            <?php echo form_error('id_ts');?>
+		</br>
+	    </div>
 <button type="submit" name="" value="enviar" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>Agregar</button>
 		</form>                   
                  
@@ -108,7 +106,7 @@
                 <th>Requisito</th>
                 <th>Copias</th>
                 <th>Original</th>
-                <th>Editar</th>
+                
                 <th>Eliminar</th>
             </tr>
         </thead>
@@ -121,7 +119,6 @@
                 <td><?php echo $r->descripcion_req; ?></td>
                  <td><?php echo $r->copias; ?></td>
                   <td><?php echo $r->original; ?></td>
-                <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/edita_requisito/<?php echo $r->fk_ts;?>/<?php echo $r->id_req_ts;?>" role="button"><span class="glyphicon glyphicon-trash"></span> Editar</a></td>
                  <td><a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/elimina_ts_requisito/<?php echo $r->fk_ts;?>/<?php echo $r->id_req_ts;?>" role="button"><span class="glyphicon glyphicon-trash"></span> Eliminar</a></td>
                 
                 
@@ -129,11 +126,10 @@
         </tbody>
     <?php }?>                                                       
         </table>
-    </br>
-    <a class="btn btn-primary btn-sm" href="<?php echo base_url();?>index.php/proyecto/alta_fichat_4/<?php echo $ts['id_ts'];?>" role="button"><span class="glyphicon glyphicon-arrow-right"></span> Paso 4</a>
+    <br/>
    	</div><!--panel body-->
 </div><!--panel primary-->
-
+<a  class="btn btn-success btn-lg" href="<?php echo base_url();?>index.php/proyecto/alta_fichat_4/<?php echo $ts['id_ts'];?>" role="button"><span class="glyphicon glyphicon-arrow-right"></span> Paso 4</a>
 
 </div>
 </div>
