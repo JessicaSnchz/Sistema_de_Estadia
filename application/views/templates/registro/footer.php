@@ -1,6 +1,7 @@
+<br><br>
   <footer class="footer">
       <div class="container">
-        <p class="text-muted">Framework UTC</p>
+        <center><p class="text-muted">Coordinación de Asistencia Jurídica a niñas, niños y adolescentes en Centros Asistenciales</p></center>
       </div>
     </footer>
   </div>

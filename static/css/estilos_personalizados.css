@@ -1,0 +1,117 @@
+.swal-overlay--show-modal .swal-modal {
+    opacity: 1;
+    pointer-events: auto;
+    box-sizing: border-box;
+    -webkit-animation: showSweetAlert .3s;
+    animation: showSweetAlert .3s;
+    will-change: transform;
+    width: 23%;
+    position: absolute;
+    margin-left: -11.5%;
+}
+
+.swal-button {
+    background-color: #4C555E;
+    color: #fff;
+    border: none;
+    box-shadow: none;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 24px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.swal-text {
+    font-size: 16px;
+    position: relative;
+    float: none;
+    line-height: normal;
+    vertical-align: top;
+    text-align: center;
+    display: inline-block;
+    margin: 0;
+    padding: 0 10px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .64);
+    max-width: calc(100% - 20px);
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+}
+
+.swal-button:active {
+    background-color: #787E86;
+}
+
+.w3-button:hover {
+    color: white !important;
+    background-color: #4c555e !important;
+    text-decoration: none;
+}
+
+.w3-bar-block .w3-bar-item {
+    width: 100%;
+    display: block;
+    padding: 8px 16px;
+    text-align: left;
+    border: none;
+    white-space: normal;
+    float: none;
+    outline: 0;
+    color: white;
+}
+
+.dataTables_scrollBody {
+    height: auto;
+    max-height: 407px !important;
+}
+
+table.dataTable thead th {
+    padding: 5px 18px
+}
+
+table.dataTable thead td {
+    padding: 10px 18px;
+}
+
+
+
+.btn-outline-secondary:hover {
+    color: #fff !important;
+    background-color: #4C555E;
+    border-color: #4C555E;
+}
+
+.btn-outline-success:hover {
+    color: #fff !important;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 168px;
+}
+
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    text-align: center !important;
+    margin-left: auto;
+}
+
+.modal-dialog {
+    max-width: 392px;
+    margin: -0.25rem auto;
+}
+
+.modal-body {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 0rem;
+}

@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Ingreso al sistema de registro</title>
+    <title>Ingreso al Sistema</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
@@ -46,12 +46,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Framework UTC</a>
+          <a class="navbar-brand" href="#">CONTROL DE EXPEDIENTES</a>
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-            <li class=""><a href="<?php echo base_url('index.php');?>">Ingresar</a></li>
+            <!--<li class=""><a href="<?php echo base_url('index.php');?>">Ingresar</a></li>-->
             <li><a href="<?php echo base_url('index.php/proyecto');?>/formulario_usuario">Crear una cuenta</a></li>
           </ul>
           <form class="navbar-form navbar-right" method="POST" action="<?php echo base_url('index.php/proyecto/ingresar');?>">
