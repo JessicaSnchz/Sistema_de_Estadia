@@ -328,9 +328,9 @@ public function edita_privilegio(){
 	$this->Modelo_proyecto->valida_sesion();
 	$this->Modelo_proyecto->Estar_aqui();
 
-	if(!empty($this->uri->segment(3))){
+	$ki = $this->uri->segment(3);
+	if(!empty($ki)){
 
-		$data['sesion'] = $this->Modelo_proyecto->datos_sesion();
 		$data['menu'] = $this->Modelo_proyecto->datos_menu();
 
 		$this->load->library('form_validation');
