@@ -1,0 +1,157 @@
+body {
+    margin: 0;
+    padding: 0;
+ 
+    background-size: cover;
+    background-position: absolute;
+    background-color: #FBBC4D;
+    font-family: sans-serif;
+    height: 100vh;
+    
+}
+
+.login-box {
+    width: 320px;
+    height: 325px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+}
+
+.login-box .logo {
+    height: 100px;
+    width: 142px;
+    position: absolute;
+    top: -50px;
+    left: calc(45% - 55px);
+}
+
+.login-box h1 {
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.login-box input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.login-box button[type=submit] {
+    border: none;
+    outline: none;
+    height: 39px;
+    background: #4C555E;
+    color: white;
+    border-radius: 10px;
+    width: 132px;
+}
+
+.login-box button[type=submit]:hover {
+    cursor: pointer;
+    background: #787E86;
+    color: white;
+}
+
+.login-box label {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    display: block;
+}
+
+
+/*/////////////////////////////estilo usuario///////////////////////////////////////*/
+
+input[type="text"] {
+    width: 100%;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    margin: 8px 0;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #4C555E;
+    box-shadow: 0 0 8px 0 #4C555E;
+}
+
+.inputWithIcon input[type="text"] {
+    padding-left: 40px;
+}
+
+.inputWithIcon {
+    position: relative;
+}
+
+.inputWithIcon i {
+    position: absolute;
+    left: 0;
+    top: 8px;
+    padding: 9px 8px;
+    color: #aaa;
+    transition: 0.3s;
+}
+
+.inputWithIcon input[type="text"]:focus+i {
+    color:#4C555E;
+}
+
+.inputWithIcon.inputIconBg i {
+    background-color: #aaa;
+    color: #fff;
+    padding: 9px 4px;
+    border-radius: 4px 0 0 4px;
+}
+
+.inputWithIcon.inputIconBg input[type="text"]:focus+i {
+    color: #fff;
+    background-color: #4C555E;
+}
+
+
+/*///////////////////////////////////boton contraseña//////////////////////////////////*/
+
+input[type="password"] {
+    width: 100%;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    margin: 8px 0;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+input[type="password"]:focus {
+    border-color: #4C555E;
+    box-shadow: 0 0 8px 0 #4C555E;
+}
+
+.inputWithIcon input[type="password"] {
+    padding-left: 40px;
+}
+
+.inputWithIcon input[type="password"]:focus+i {
+    color: #4C555E;
+}
+
+.inputWithIcon.inputIconBg i {
+    background-color: #aaa;
+    color: #fff;
+    padding: 9px 4px;
+    border-radius: 4px 0 0 4px;
+}
+
+.inputWithIcon.inputIconBg input[type="password"]:focus+i {
+    color: #fff;
+    background-color: #4C555E;
