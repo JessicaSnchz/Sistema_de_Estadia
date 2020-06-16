@@ -21,6 +21,8 @@
               <div class="form-group">
               <p>Hola soy Carmen</p>
               <p>Estoy probando conexión con GIT</p>
+              <p>Hola soy Jessica</p>
+              <p>Confirmo que funciona la conexión de GIT</p>
                 <label for="inputEmail3" class="col-sm-2 control-label">Correo electrónico</label>
                 <div class="col-sm-6">
                   <input type="email" class="form-control" id="inputEmail3" name="usuario" placeholder="Email">
