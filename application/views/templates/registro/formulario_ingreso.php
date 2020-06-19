@@ -19,6 +19,7 @@
             ?>
 
               <div class="form-group">
+              <p>Prueba de redireccionamiento </p>
      
                 <label for="inputEmail3" class="col-sm-2 control-label">Correo electrónico</label>
                 <div class="col-sm-6">
